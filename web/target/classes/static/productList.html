@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>商品列表</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+
+<link
+	href="bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="bootstrap/css/bootstrap-theme.min.css"
+	rel="stylesheet">
+
+<script type="text/javascript"
+	src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="bootstrap/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			$.ajax({
+				url:"pro",
+				type:"get",
+				statusCode:{
+					200:function (data) {
+						$(data).each(function (index,ele) {
+							$("#tb").append("<tr>\n" +
+									"\t\t\t\t\t\t\t<td>"+ele.name+"</td>\n" +
+									"\t\t\t\t\t\t\t<td>"+ele.type+"</td>\n" +
+									"\t\t\t\t\t\t\t<td>"+ele.price+"</td>\n" +
+									"\t\t\t\t\t\t\t<td><a class=\"btn btn-info\"\n" +
+									"\t\t\t\t\t\t\t\t   href=\"javascript\" onclick='add("+ele.id+")' \n" +
+									"\t\t\t\t\t\t\t\t>添加到购物车</a></td>\n" +
+									"\t\t\t\t\t\t</tr>")
+						})
+					}
+				}
+			})
+		})
+		function add(id) {
+			$.ajax({
+				url:"pro/"+id,
+				type:"get",
+				statusCode:{
+					200:function () {
+						location.href="cartList.html";
+					},
+					500:function () {
+						location.href="productList.html";
+					}
+				}
+			})
+		}
+	</script>
+
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">
+				<h2>商品列表</h2>
+			</div>
+			<div class="panel-heading ">
+				<table class="table table-bookName">
+					<thead>
+						<tr>
+							<th width="90" align="lift">&nbsp;</th>
+							<th><a
+								href="cartList.html">查看购物车</a>
+							</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div class="panel-body">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>商品名称</th>
+							<th>商品型号</th>
+							<th>商品单价</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody id="tb">
+	
+
+					
+					</tbody>
+				</table>
+			</div>
+
+
+		</div>
+	</div>
+
+</body>
+</html>
+
